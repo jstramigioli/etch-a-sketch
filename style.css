@@ -1,6 +1,6 @@
 #gridContainer {
-    height: 960px;
-    width: 960px;
+    height: 720px;
+    width: 720px;
     display: flex;
     align-self: center;
     flex-wrap: wrap;
@@ -9,8 +9,16 @@
 
 .square {
     box-sizing: border-box;
-    background-color: aqua;
-    border-width: 10px;
+    background-color: rgb(255, 255, 255);
+    border-width: 3px;
     border-style: solid;
-    border-color: aliceblue;
+    border-color: rgb(0, 0, 0);
+}
+
+.black {
+    background-color: black;
+}
+
+.color {
+
 }

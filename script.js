@@ -1,10 +1,22 @@
 gridContainer = document.querySelector('#gridContainer');
 gridContainerWidth = gridContainer.offsetWidth;
+gridContainer.addEventListener('mouseover', e => changeSquareColor(e));
 
-function createGrid(numSquaresTarget) {
+btnRowNum = document.querySelector('.rowNum');
+btnRowNum.addEventListener('click', () => {
+    setSquaresPerRow();
+    updateGrid()}
+)
+
+btnGameMode = document.querySelector('.gameMode');
+btnGameMode.addEventListener('click', changeGameMode);
+
+let gameMode = 'normal'
+
+function createGrid(numSquaresPerRow) {
     let numSquares = 0;
-    let numSquaresPerRow = Math.sqrt(numSquaresTarget);
-    while (numSquares < numSquaresTarget) {
+    if (numSquaresPerRow > 100) numSquaresPerRow = 100 ;
+    while (numSquares < (numSquaresPerRow**2)) {
         addSquare(numSquaresPerRow);
         ++numSquares;
     }
@@ -19,4 +31,41 @@ function addSquare(numSquaresPerRow) {
     gridContainer.appendChild(square);
 }
 
-createGrid(prompt('Cantidad de cuadros'))
+function changeSquareColor(e) {
+    if (e.target.classList.contains('square') && gameMode === 'normal') {
+        e.target.classList.toggle('black')
+    }
+    else if (e.target.classList.contains('square') && gameMode === 'color') {
+        e.target.classList.toggle('color')
+        e.target.style.backgroundColor = ('#'+Math.floor(Math.random()*16777215).toString(16))
+    }
+}
+
+function removeSquares() {
+    while (gridContainer.firstChild) {
+        gridContainer.removeChild(gridContainer.firstChild)
+    }
+}
+
+function setSquaresPerRow() {
+    numSquaresPerRow = prompt('Cantidad de cuadros por fila')
+}
+
+function updateGrid() {
+    removeSquares();
+    createGrid(numSquaresPerRow);
+}
+
+function changeGameMode() {
+    if (gameMode === 'normal') {
+        gameMode = 'color';
+        btnGameMode.textContent = 'Color';
+        updateGrid();
+    }
+    else {
+        gameMode = 'normal';
+        btnGameMode.textContent = 'Normal';
+        updateGrid();
+    }
+}
+
